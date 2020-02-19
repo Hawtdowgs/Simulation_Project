@@ -1,3 +1,7 @@
+/*
+ * Konner Friesen	
+ * Feb 19, 2020
+ */
 package simulationProject;
 
 public class Rabbit {
