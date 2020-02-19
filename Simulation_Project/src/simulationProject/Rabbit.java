@@ -1,13 +1,9 @@
-/*
- * Konner Friesen
- * February 18, 2020
- */
 package simulationProject;
 
-public class Test {
+public class Rabbit {
 
 	public static void main(String[] args) {
-		
+	
 
 	}
 
