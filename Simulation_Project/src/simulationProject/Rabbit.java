@@ -22,9 +22,9 @@ public class Rabbit {
 	
 	
 	
-	public Rabbit() {
+	public static void Rabb() {
 		int x, y, inp;
-		int[][] ranSpawn = null;
+		int[][] ranSpawn = new int[20][20];
 		Random r = new Random();
 		
 		inp = Rabbit.getRab();
@@ -32,13 +32,16 @@ public class Rabbit {
 		for(int i = 0; i < inp; i++) {
 			
 			
-			x = r.nextInt(20 - 0 + 1) + 1;
-			y = r.nextInt(20 - 0 + 1) + 1;
-			
+			x = r.nextInt(19 - 0 + 1) + 0;
+			y = r.nextInt(19 - 0 + 1) + 0;
+		
 			ranSpawn[x][y] = 1;
+			System.out.println(ranSpawn[x][y]);
 			
 		
 		}
+		
+		
 		
 		
 	}
