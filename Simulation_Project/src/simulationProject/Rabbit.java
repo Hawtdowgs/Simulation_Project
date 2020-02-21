@@ -23,6 +23,7 @@ public class Rabbit {
 	
 	
 	public static void Rabb() {
+		boolean Rabbi;
 		int x, y, inp;
 		int[][] ranSpawn = new int[20][20];
 		Random r = new Random();
@@ -36,9 +37,20 @@ public class Rabbit {
 			y = r.nextInt(19 - 0 + 1) + 0;
 		
 			ranSpawn[x][y] = 1;
-			System.out.println(ranSpawn[x][y]);
+			
 			
 		
+		}
+		
+		for(int i = 0; i < 20; i++) {
+			for(int a = 0; a < 20; a++) {
+				
+				if(ranSpawn[i][a] == 1) {
+					Rabbi = true;
+				}
+				
+			}
+			
 		}
 		
 		
