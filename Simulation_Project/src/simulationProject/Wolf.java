@@ -3,7 +3,7 @@ package simulationProject;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Wolf {
+public class wolf {
 
 	public static void main(String[] args) {
 		//formatting, what's that?
