@@ -11,6 +11,15 @@ public class Rabbit {
 	int inSpawn;
 	boolean alive, fed, roam, reproduce;
 	
+	public Rabbit() {
+		fed = true;
+		alive = true;
+		
+		
+	}
+	
+	
+	
 	public static int getRab() {
 		int spawnNum;
 		Scanner input = new Scanner(System.in);
@@ -40,17 +49,6 @@ public class Rabbit {
 			
 			
 		
-		}
-		
-		for(int i = 0; i < 20; i++) {
-			for(int a = 0; a < 20; a++) {
-				
-				if(ranSpawn[i][a] == 1) {
-					Rabbi = true;
-				}
-				
-			}
-			
 		}
 		
 		
