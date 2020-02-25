@@ -11,10 +11,12 @@ import java.util.Random;
 public class Grid {
 
 	public static void main(String[] args) {
-		int RabSpawn;
+		int[][] Rabspawn = new int[20][20];
 		Rabbit Rab = new Rabbit();
 		
-		RabSpawn = Rabbit.getRab();
+		Rabspawn = Rabbit.Rabb();
+		
+		
 		
 		
 	}
