@@ -47,9 +47,9 @@ public class Rabbit {
 		
 		for(int i = 0; i < inp; i++) {
 
-			x = r.nextInt(19 - 0 + 1) + 0;
-			y = r.nextInt(19 - 0 + 1) + 0;
-			s = r.nextInt(1 - 0 + 1) + 0;
+			x = r.nextInt(20);
+			y = r.nextInt(20);
+			s = r.nextInt(20);
 		
 			if(ranSpawn[x][y] == 1) {
 				i--;
