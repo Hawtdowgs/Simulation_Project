@@ -23,6 +23,7 @@ public class Test {
 		forest.generateForestGrid();
 		forestGrid = forest.returnForestGrid();
 		SimulationGui simulationGui = new SimulationGui(forestGrid);
+		
 	}
 
 }

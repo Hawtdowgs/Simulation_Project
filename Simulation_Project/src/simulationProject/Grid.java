@@ -9,14 +9,13 @@ import java.util.Scanner;
 import java.util.Random;
 
 public class Grid {
-
-	public static void main(String[] args) {
-		int RabSpawn;
-		Rabbit Rab = new Rabbit();
-		
-		RabSpawn = Rabbit.getRab();
-		
+	private int[][][]grid;
+	
+	public Grid() {
+		grid = new int[3][20][20];
+	}
+	
+	public void updateGrid(int[][]forestGrid) {
 		
 	}
-
 }
