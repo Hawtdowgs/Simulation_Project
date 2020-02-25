@@ -19,7 +19,10 @@ public class Rabbit {
 	}
 	
 	
-	
+	/**
+	 * gets a value  from the player for how many rabbits are in the simulation
+	 * @return
+	 */
 	public static int getRab() {
 		int spawnNum;
 		Scanner input = new Scanner(System.in);
@@ -30,26 +33,37 @@ public class Rabbit {
 	}
 	
 	
-	
-	public static void Rabb() {
+	/**
+	 * populates an array which corresponds to the grid for where the rabbits start
+	 * @return
+	 */
+	public static int[][] Rabb() {
 		boolean Rabbi;
-		int x, y, inp;
+		int x, y, s, inp, rSex = 0;
 		int[][] ranSpawn = new int[20][20];
 		Random r = new Random();
 		
 		inp = Rabbit.getRab();
 		
 		for(int i = 0; i < inp; i++) {
-			
-			
+
 			x = r.nextInt(19 - 0 + 1) + 0;
 			y = r.nextInt(19 - 0 + 1) + 0;
+			s = r.nextInt(1 - 0 + 1) + 0;
 		
+			if(ranSpawn[x][y] == 1) {
+				i--;
+			}else {	
+				if(s == 1) {
+				rSex = 1;
+				}else {
+				rSex = 0;
+				}
 			ranSpawn[x][y] = 1;
-			
-			
-		
+			}
+			System.out.println(rSex + "  " + x + " " + y);
 		}
+		return ranSpawn;
 		
 		
 		
