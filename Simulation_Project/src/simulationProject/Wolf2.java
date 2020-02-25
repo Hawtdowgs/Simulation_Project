@@ -33,4 +33,22 @@ private int yPos;
 		
 		return newPos;
 	}
+	
+	public void reproduce() {
+		//Search around for a square for the new wolf to sit on
+		Wolf2 wolf = new Wolf2(xPos, yPos + 1);
+	}
+	
+	public void eat() {
+		
+	}
+	
+	public int[] getPos() {
+		int[]wolfPos = new int[2];
+		
+		wolfPos[0] = xPos;
+		wolfPos[1] = yPos;
+		
+		return wolfPos;
+	}
 }
