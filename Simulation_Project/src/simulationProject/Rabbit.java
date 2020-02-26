@@ -67,11 +67,21 @@ public class Rabbit {
 							switch(chooseTree) {
 							case 0: forestGrid[i + 1][j] = false;break;
 							case 1: forestGrid[i][j + 1] = false;break;	
-							default:
+							default: System.out.print("");
 							}
 							actionUsed[i][j] = true;
 						}else{
-							
+							//If next to another rabbit, reproduce
+							if(rabbitSpawn[i + 1][j] == true || rabbitSpawn[i][j + 1] == true) {
+								fed[i][j] = true;
+								chooseTree = r.nextInt(2);
+								switch(chooseTree) {
+								case 0: forestGrid[i + 1][j] = false;break;
+								case 1: forestGrid[i][j + 1] = false;break;	
+								default: System.out.print("");
+								}
+								actionUsed[i][j] = true;
+							}
 						}
 					}else if(i == 0 && j == 19) {
 						if(forestGrid[i + 1][j] == true || forestGrid[i][j - 1] == true) {
@@ -80,10 +90,20 @@ public class Rabbit {
 							switch(chooseTree) {
 							case 0: forestGrid[i + 1][j] = false;break;
 							case 1: forestGrid[i][j - 1] = false;break;	
+							default: System.out.print("");
 							}
 							actionUsed[i][j] = true;
 						}else{
-							
+							if(rabbitSpawn[i + 1][j] == true || rabbitSpawn[i][j - 1] == true) {
+								fed[i][j] = true;
+								chooseTree = r.nextInt(2);
+								switch(chooseTree) {
+								case 0: forestGrid[i + 1][j] = false;break;
+								case 1: forestGrid[i][j + 1] = false;break;	
+								default: System.out.print("");
+								}
+								actionUsed[i][j] = true;
+							}
 						}
 					}else if(i == 19 && j == 0) {
 						if(forestGrid[i - 1][j] == true || forestGrid[i][j + 1] == true) {
@@ -92,10 +112,20 @@ public class Rabbit {
 							switch(chooseTree) {
 							case 0: forestGrid[i - 1][j] = false;break;
 							case 1: forestGrid[i][j + 1] = false;break;	
+							default: System.out.print("");
 							}
 							actionUsed[i][j] = true;
 						}else{
-							
+							if(rabbitSpawn[i - 1][j] == true || rabbitSpawn[i][j + 1] == true) {
+								fed[i][j] = true;
+								chooseTree = r.nextInt(2);
+								switch(chooseTree) {
+								case 0: forestGrid[i + 1][j] = false;break;
+								case 1: forestGrid[i][j + 1] = false;break;	
+								default: System.out.print("");
+								}
+								actionUsed[i][j] = true;
+							}
 						}
 					}else if(i == 19 && j == 19) {
 						if(forestGrid[i - 1][j] == true || forestGrid[i][j - 1] == true) {
@@ -104,10 +134,20 @@ public class Rabbit {
 							switch(chooseTree) {
 							case 0: forestGrid[i - 1][j] = false;break;
 							case 1: forestGrid[i][j - 1] = false;break;	
+							default: System.out.print("");
 							}
 							actionUsed[i][j] = true;
 						}else{
-							
+							if(rabbitSpawn[i - 1][j] == true || rabbitSpawn[i][j - 1] == true) {
+								fed[i][j] = true;
+								chooseTree = r.nextInt(2);
+								switch(chooseTree) {
+								case 0: forestGrid[i + 1][j] = false;break;
+								case 1: forestGrid[i][j + 1] = false;break;	
+								default: System.out.print("");
+								}
+								actionUsed[i][j] = true;
+							}
 						}
 					//Edge cases: check only the squares next to the selected square which are inside the grid	
 					}else if(i == 0) {
@@ -118,10 +158,21 @@ public class Rabbit {
 							case 0: forestGrid[i + 1][j] = false;break;
 							case 1: forestGrid[i][j - 1] = false;break;
 							case 2: forestGrid[i][j + 1] = false;break;
+							default: System.out.print("");
 							}
 							actionUsed[i][j] = true;
 						}else{
-							
+							if(rabbitSpawn[i + 1][j] == true || rabbitSpawn[i][j - 1] == true || rabbitSpawn[i][j + 1] == true) {
+								fed[i][j] = true;
+								chooseTree = r.nextInt(3);
+								switch(chooseTree) {
+								case 0: forestGrid[i + 1][j] = false;break;
+								case 1: forestGrid[i][j - 1] = false;break;
+								case 2: forestGrid[i][j + 1] = false;break;
+								default: System.out.print("");
+								}
+								actionUsed[i][j] = true;
+							}
 						}
 					}else if(i == 19) {
 						if(forestGrid[i - 1][j] == true || forestGrid[i][j - 1] == true || forestGrid[i][j + 1] == true) {
@@ -131,10 +182,21 @@ public class Rabbit {
 							case 0: forestGrid[i - 1][j] = false;break;
 							case 1: forestGrid[i][j - 1] = false;break;
 							case 2: forestGrid[i][j + 1] = false;break;
+							default: System.out.print("");
 							}
 							actionUsed[i][j] = true;
 						}else{
-							
+							if(rabbitSpawn[i - 1][j] == true || rabbitSpawn[i][j - 1] == true || rabbitSpawn[i][j + 1] == true) {
+								fed[i][j] = true;
+								chooseTree = r.nextInt(3);
+								switch(chooseTree) {
+								case 0: forestGrid[i - 1][j] = false;break;
+								case 1: forestGrid[i + 1][j] = false;break;
+								case 2: forestGrid[i][j + 1] = false;break;	
+								default: System.out.print("");
+								}
+								actionUsed[i][j] = true;
+							}
 						}
 					}else if(j == 0) {
 						if(forestGrid[i - 1][j] == true || forestGrid[i + 1][j] == true || forestGrid[i][j + 1] == true) {
@@ -144,10 +206,20 @@ public class Rabbit {
 							case 0: forestGrid[i - 1][j] = false;break;
 							case 1: forestGrid[i + 1][j] = false;break;
 							case 2: forestGrid[i][j + 1] = false;break;
+							default: System.out.print("");
 							}
 							actionUsed[i][j] = true;
 						}else{
-							
+							if(rabbitSpawn[i - 1][j] || rabbitSpawn[i + 1][j] == true || rabbitSpawn[i][j + 1] == true) {
+								fed[i][j] = true;
+								chooseTree = r.nextInt(3);
+								switch(chooseTree) {
+								case 0: forestGrid[i + 1][j] = false;break;
+								case 1: forestGrid[i][j + 1] = false;break;	
+								default: System.out.print("");
+								}
+								actionUsed[i][j] = true;
+							}
 						}
 					}else if(j == 19) {
 						if(forestGrid[i - 1][j] == true || forestGrid[i + 1][j] == true || forestGrid[i][j - 1] == true) {
@@ -156,11 +228,21 @@ public class Rabbit {
 							switch(chooseTree) {
 							case 0: forestGrid[i - 1][j] = false;break;
 							case 1: forestGrid[i + 1][j] = false;break;
-							case 2: forestGrid[i][j - 1] = false;break;	
+							case 2: forestGrid[i][j - 1] = false;break;
+							default: System.out.print("");
 							}
 							actionUsed[i][j] = true;
 						}else{
-							
+							if(rabbitSpawn[i - 1][j] == true || rabbitSpawn[i + 1][j] == true || rabbitSpawn[i][j - 1] == true) {
+								fed[i][j] = true;
+								chooseTree = r.nextInt(3);
+								switch(chooseTree) {
+								case 0: forestGrid[i + 1][j] = false;break;
+								case 1: forestGrid[i][j + 1] = false;break;	
+								default: System.out.print("");
+								}
+								actionUsed[i][j] = true;
+							}
 						}
 					//General case: check all neighbouring squares
 					}else{
@@ -172,10 +254,20 @@ public class Rabbit {
 							case 1: forestGrid[i + 1][j] = false;break;
 							case 2: forestGrid[i][j - 1] = false;break;
 							case 3: forestGrid[i][j + 1] = false;break;
+							default: System.out.print("");
 							}
 							actionUsed[i][j] = true;
 						}else{
-							
+							if(rabbitSpawn[i - 1][j] == true || rabbitSpawn[i + 1][j] == true || rabbitSpawn[i][j - 1] == true || rabbitSpawn[i][j + 1] == true) {
+								fed[i][j] = true;
+								chooseTree = r.nextInt(4);
+								switch(chooseTree) {
+								case 0: forestGrid[i + 1][j] = false;break;
+								case 1: forestGrid[i][j + 1] = false;break;	
+								default:
+								}
+								actionUsed[i][j] = true;
+							}
 						}
 					}
 				}
