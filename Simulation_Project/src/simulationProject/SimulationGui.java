@@ -35,11 +35,14 @@ public class SimulationGui {
 		
 		for(int i = 0;i < 20;i++) {
 			for(int j = 0;j < 20;j++) {
+				System.out.println(i + " " + j);
 				if(forestGrid[i][j] = false) {
 					labelGrid[i][j].setIcon(new ImageIcon("images/grey square.png"));
 				}else{
+				
 					labelGrid[i][j].setIcon(new ImageIcon("images/green square.png"));
 				}
+				
 				c.gridx = i;
 				c.gridy = j + 1;
 				c.gridwidth = 1;

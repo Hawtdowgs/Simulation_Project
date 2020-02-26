@@ -1,12 +1,4 @@
-<<<<<<< HEAD
-package simulationProject;
 
-public class Rabbit {
-=======
-/*
- * Konner Friesen	
- * Feb 19, 2020
- */
 package simulationProject;
 
 import java.util.Random;
@@ -42,7 +34,7 @@ public class Rabbit {
 	 * populates an array which corresponds to the grid for where the rabbits start
 	 * @return
 	 */
-	public static int[][] Rabb() {
+	public int[][] RabbSpawn() {
 		boolean Rabbi;
 		int x, y, s, inp, rSex = 0;
 		int[][] ranSpawn = new int[20][20];
@@ -54,7 +46,7 @@ public class Rabbit {
 
 			x = r.nextInt(20);
 			y = r.nextInt(20);
-			s = r.nextInt(20);
+			s = r.nextInt(2);
 		
 			if(ranSpawn[x][y] == 1) {
 				i--;
@@ -74,6 +66,6 @@ public class Rabbit {
 		
 		
 	}
->>>>>>> branch 'foofy' of https://github.com/Hawtdowgs/Simulation_Project.git
+
 
 }
