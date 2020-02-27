@@ -9,11 +9,15 @@ public class wolf {
 		Random r = new Random();
 		
 		boolean[][] wAlive = new boolean[20][20], wSex = new boolean[20][20], full = new boolean[20][20],
-				move = new boolean[20][20];
+				move = new boolean[20][20], wNew;
 		int initial, pos1, pos2;
 		int[][] wolf;
 		
-		wAlive = wolfSpawn(wSex); 
+		
+		wAlive = wolfSpawn(wSex);
+		wNew = wolfReproduce(wSex,wAlive,full);
+		
+		//this is for testing purposes
 		for(int i = 0; i < 20; i ++) {
 			for(int j = 0; j < 20; j ++) {
 				System.out.println(i + " " + j + " " + wAlive[i][j] + " " + wSex[i][j]);
@@ -29,7 +33,7 @@ public class wolf {
 		int pos1,pos2,initial,sex;
 		boolean[][] alive = new boolean[20][20];
 		
-		//sets every space to have a "dead" wolf
+		//sets every space to a non wolf
 				for(int i = 0; i < 20; i ++) {
 					for(int j = 0; j < 20; j ++) {
 						alive[i][j] = false;
@@ -37,6 +41,7 @@ public class wolf {
 					}
 				}
 				
+				//asks and sets the starting number of wolves
 				System.out.println("How many wolves would you like to begin the simulation with?");
 				initial = input.nextInt();
 				
@@ -47,16 +52,21 @@ public class wolf {
 					
 					alive[pos1][pos2] = true;
 					
-					
+					//gives the wolf a sex helping determine whether the wolf can reproduce
 					if(sex == 0) {
 						male[pos1][pos2] = true;
 					}else {
 						male[pos1][pos2] = false;
 					}
-					System.out.println(pos1 + " " + pos2 + " " + alive[pos1][pos2]);
+					System.out.println(pos1 + " " + pos2 + " " + alive[pos1][pos2]  + " " + male[pos1][pos2]);
 				}
 				return alive;
 	}
 	
+	public static boolean[][] wolfReproduce(boolean[][]male, boolean[][]position, boolean[][]full){
+		Random r = new Random();
+		
+		
+	}
 	
 }
