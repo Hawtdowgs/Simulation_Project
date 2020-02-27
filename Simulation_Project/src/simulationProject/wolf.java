@@ -3,18 +3,18 @@ import java.util.Random;
 import java.util.Scanner;
 public class wolf {
 private boolean[][] wPosition, wSex, wFull, wMove;
-private int[][] wolf;
-private double rate;
-private int initial, sex, pos1, pos2;
+private double rate, wolf;
+private int initial, sex, pos1, pos2, reproduction;
 	@SuppressWarnings("null")
 	public wolf() {
 		wPosition = new boolean[20][20];
 		wSex = new boolean[20][20];
 		wFull = new boolean[20][20];
 		wMove = new boolean[20][20];
-		wolf = new int[20][20];
+		wolf = 0;
 		rate = 0;
 		initial = 0;
+		reproduction = 0;
 	}
 	public void wSetUp() {
 		Random r = new Random();
@@ -40,7 +40,7 @@ private int initial, sex, pos1, pos2;
 		do {
 			System.out.println("What it the reproductive rate of the wolves?");
 			System.out.println("values between 0 and 1 inclusive are valid:");
-			rate = input.nextDouble();
+			rate = input.nextDouble() * 100;
 			
 			if(rate < 0 || rate > 1) {
 				validRate = false;
@@ -81,9 +81,49 @@ private int initial, sex, pos1, pos2;
 					}else {
 						wSex[pos1][pos2] = false;
 					}
-					System.out.println(pos1 + " " + pos2 + " " + wPosition[pos1][pos2]  + " " + wSex[pos1][pos2]);
 				}
 				return wPosition;
+	}
+	
+	public boolean[][] wReproduce(boolean [][]position){
+		wolf = 0;
+		/* this may or may not be used
+		if(rate == 0) {
+			reproduction = 0;
+		}else if(rate > 0 && rate < .1) {
+			reproduction = 1;
+		}else if(rate > .1 && rate < .2) {
+			reproduction = 2;
+		}else if(rate > .2 && rate < .3) {
+			reproduction = 3;
+		}else if(rate > .3 && rate < .4) {
+			reproduction = 4;
+		}else if(rate > .4 && rate < .5) {
+			reproduction = 5;
+		}else if(rate > .5 && rate < .6) {
+			reproduction = 6;
+		}else if(rate > .5 && rate < .7) {
+			reproduction = 7;
+		}else if(rate > .7 && rate < .8) {
+			reproduction = 8;
+		}else if(rate > .8 && rate < .9) {
+			reproduction = 9;
+		}else if(rate > .9 && rate < 1) {
+			reproduction = 10;
+		}
+		*/
+		
+		//finds the number of wolves that currently exist
+		for(int i = 0; i < 20; i ++) {
+			for(int j = 0; j < 20; j++) {
+				if(position[i][j] == true) {
+					wolf ++;
+				}
+			}
+		}
+		
+		
+		return position;
 	}
 	
 }
