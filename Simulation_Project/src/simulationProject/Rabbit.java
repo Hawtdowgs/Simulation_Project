@@ -51,7 +51,7 @@ public class Rabbit {
 	/**
 	 * Codes what the rabbits do when the simulation increments
 	 */
-	public void tick(boolean[][]forestGrid) {
+	public boolean[][] tick(boolean[][]forestGrid) {
 		//Wrap edges - when i or j = 20, set i or j = 0, and when i or j = -1, set i or j = 19
 		Random r = new Random();
 		int chooseTree, error;
@@ -59,93 +59,98 @@ public class Rabbit {
 		for(int i = 0;i < 20;i++) {
 			for(int j = 0;j < 20;j++) {
 				if(rabbitSpawn[i][j] == true) {
-					//If next to a tree/plant, eat
-					try {
-						if(forestGrid[i - 1][j] == true) {
-							fed[i][j] = true;
-							forestGrid[i - 1][j] = false;
-							actionUsed[i][j] = true;
-						}else if(forestGrid[i + 1][j] == true) {
-							fed[i][j] = true;
-							forestGrid[i + 1][j] = false;
-							actionUsed[i][j] = true;
-						}else if(forestGrid[i][j - 1] == true) {
-							fed[i][j] = true;
-							forestGrid[i][j - 1] = false;
-							actionUsed[i][j] = true;
-						}else if(forestGrid[i][j + 1] == true) {
-							fed[i][j] = true;
-							forestGrid[i][j + 1] = false;
-							actionUsed[i][j] = true;
+					//If not fed and next to a tree, eat
+					if(fed[i][j] == false) {
+						try {
+							if(forestGrid[i - 1][j] == true) {
+								fed[i][j] = true;
+								forestGrid[i - 1][j] = false;
+								actionUsed[i][j] = true;
+							}else if(forestGrid[i + 1][j] == true) {
+								fed[i][j] = true;
+								forestGrid[i + 1][j] = false;
+								actionUsed[i][j] = true;
+							}else if(forestGrid[i][j - 1] == true) {
+								fed[i][j] = true;
+								forestGrid[i][j - 1] = false;
+								actionUsed[i][j] = true;
+							}else if(forestGrid[i][j + 1] == true) {
+								fed[i][j] = true;
+								forestGrid[i][j + 1] = false;
+								actionUsed[i][j] = true;
+							}
+						}catch(Exception e) {
+							/*
+							 * This catch statement wraps the edges
+							 * by adding or subtracting 20 when an
+							 * OutOfBoundsException is thrown
+							 */
+							error = e.getStackTrace()[0].getLineNumber();
+							if(error == 64) {
+								fed[i][j] = true;
+								forestGrid[19][j] = false;
+								actionUsed[i][j] = true;
+							}else if(error == 68) {
+								fed[i][j] = true;
+								forestGrid[0][j] = false;
+								actionUsed[i][j] = true;
+							}else if(error == 72) {
+								fed[i][j] = true;
+								forestGrid[i][19] = false;
+								actionUsed[i][j] = true;
+							}else if(error == 76) {
+								fed[i][j] = true;
+								forestGrid[i][0] = false;
+								actionUsed[i][j] = true;
+							}
 						}
-					}catch(Exception e) {
-						error = e.getStackTrace()[0].getLineNumber();
-						if(error == 64) {
-							fed[i][j] = true;
-							forestGrid[19][j] = false;
-							actionUsed[i][j] = true;
-						}else if(error == 68) {
-							fed[i][j] = true;
-							forestGrid[0][j] = false;
-							actionUsed[i][j] = true;
-						}else if(error == 72) {
-							fed[i][j] = true;
-							forestGrid[i][19] = false;
-							actionUsed[i][j] = true;
-						}else if(error == 76) {
-							fed[i][j] = true;
-							forestGrid[i][0] = false;
-							actionUsed[i][j] = true;
+					}
+					//If fed and next to another rabbit, reproduce
+					if(fed[i][j] == true) {
+						try {
+							//If next to another rabbit, place a rabbit on the first available space without one
+							if(rabbitSpawn[i - 1][j] == true || rabbitSpawn[i + 1][j] == true || rabbitSpawn[i][j - 1] == true || rabbitSpawn[i][j + 1] == true) {
+								if(rabbitSpawn[i - 1][j] == false)	{
+									rabbitSpawn[i - 1][j] = true;
+								}else if(rabbitSpawn[i + 1][j] == false) {
+									rabbitSpawn[i + 1][j] = true;
+								}else if(rabbitSpawn[i][j - 1] == false) {
+									rabbitSpawn[i][j - 1] = true;
+								}else if(rabbitSpawn[i][j + 1] == false) {
+									rabbitSpawn[i][j + 1] = true;
+								}
+							}
+						}catch(Exception e) {
+							error = e.getStackTrace()[0].getLineNumber();
+							if(error == 112) {
+								if(i == 0) {
+									
+								}
+								if(i == 19) {
+									
+								}
+								if(j == 0) {
+									
+								}
+								if(j == 19) {
+									
+								}
+							}else if(error == 113) {
+								
+							}else if(error == 115) {
+								
+							}else if(error == 117) {
+								
+							}else if(error == 119) {
+								
+							}
 						}
 					}
 					
-					try {
-						if(rabbitSpawn[i - 1][j] == true) {
-							fed[i][j] = true;
-							forestGrid[i - 1][j] = false;
-							actionUsed[i][j] = true;
-						}else if(rabbitSpawn[i + 1][j] == true) {
-							fed[i][j] = true;
-							forestGrid[i + 1][j] = false;
-							actionUsed[i][j] = true;
-						}else if(rabbitSpawn[i][j - 1] == true) {
-							fed[i][j] = true;
-							forestGrid[i][j - 1] = false;
-							actionUsed[i][j] = true;
-						}else if(rabbitSpawn[i][j + 1] == true) {
-							fed[i][j] = true;
-							forestGrid[i][j + 1] = false;
-							actionUsed[i][j] = true;
-						}
-					}catch(Exception e) {
-						error = e.getStackTrace()[0].getLineNumber();
-						if(error == 64) {
-							fed[i][j] = true;
-							forestGrid[19][j] = false;
-							actionUsed[i][j] = true;
-						}else if(error == 68) {
-							fed[i][j] = true;
-							forestGrid[0][j] = false;
-							actionUsed[i][j] = true;
-						}else if(error == 72) {
-							fed[i][j] = true;
-							forestGrid[i][19] = false;
-							actionUsed[i][j] = true;
-						}else if(error == 76) {
-							fed[i][j] = true;
-							forestGrid[i][0] = false;
-							actionUsed[i][j] = true;
-						}
-					}
 				}
 			}
 		}
+		
+		return forestGrid;
 	}
 }
-		
-		//If next to a rabbit of the opposite sex, reproduce
-		//Otherwise, move
-	
-
-	
-
