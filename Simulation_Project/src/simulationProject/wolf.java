@@ -2,19 +2,21 @@ package simulationProject;
 import java.util.Random;
 import java.util.Scanner;
 public class wolf {
-private boolean[][] wPosition, wSex, wFull, wMove;
-private double rate, wolf;
-private int initial, sex, pos1, pos2, reproduction;
+private boolean[][] wPosition, wSex, wFull, wMove, wMoved;
+private double rate, wolf, wolfI, wolfF;
+private int initial, sex, pos1, pos2, fedMod;
 	@SuppressWarnings("null")
 	public wolf() {
 		wPosition = new boolean[20][20];
 		wSex = new boolean[20][20];
 		wFull = new boolean[20][20];
 		wMove = new boolean[20][20];
+		wMoved = new boolean[20][20];
 		wolf = 0;
 		rate = 0;
-		initial = 0;
-		reproduction = 0;
+		wolfI = 0;
+		wolfF = 0;
+		fedMod = 0;
 	}
 	public void wSetUp() {
 		Random r = new Random();
@@ -27,9 +29,9 @@ private int initial, sex, pos1, pos2, reproduction;
 		do {
 			System.out.println("How many wolves would you like to begin the simulation with?");
 			System.out.println("values between 0 and 400 inclusive are valid:");
-			initial = input.nextInt();
+			wolfI = input.nextDouble();
 			
-			if(initial < 0 ||  initial > 400) {
+			if(wolfI < 0 ||  wolfI > 400) {
 				validStart = false;
 			}else {
 				validStart = true;
@@ -68,7 +70,7 @@ private int initial, sex, pos1, pos2, reproduction;
 					}
 				}
 				
-				for(int i = 0; i < initial; i++) {
+				for(int i = 0; i < wolfI; i++) {
 					pos1 = r.nextInt(19-0+1)+0;
 					pos2 = r.nextInt(19-0+1)+0;
 					sex = r.nextInt(1-0+1)+0;
@@ -85,42 +87,86 @@ private int initial, sex, pos1, pos2, reproduction;
 				return wPosition;
 	}
 	
-	public boolean[][] wReproduce(boolean [][]position){
-		wolf = 0;
-		/* this may or may not be used
-		if(rate == 0) {
-			reproduction = 0;
-		}else if(rate > 0 && rate < .1) {
-			reproduction = 1;
-		}else if(rate > .1 && rate < .2) {
-			reproduction = 2;
-		}else if(rate > .2 && rate < .3) {
-			reproduction = 3;
-		}else if(rate > .3 && rate < .4) {
-			reproduction = 4;
-		}else if(rate > .4 && rate < .5) {
-			reproduction = 5;
-		}else if(rate > .5 && rate < .6) {
-			reproduction = 6;
-		}else if(rate > .5 && rate < .7) {
-			reproduction = 7;
-		}else if(rate > .7 && rate < .8) {
-			reproduction = 8;
-		}else if(rate > .8 && rate < .9) {
-			reproduction = 9;
-		}else if(rate > .9 && rate < 1) {
-			reproduction = 10;
-		}
-		*/
-		
-		//finds the number of wolves that currently exist
-		for(int i = 0; i < 20; i ++) {
+	public boolean[][]wMove(){
+		Random r = new Random();
+		//resets the moved boolean
+		for(int i = 0; i < 20; i++) {
 			for(int j = 0; j < 20; j++) {
-				if(position[i][j] == true) {
-					wolf ++;
+				wMoved[i][j] = false;
+			}
+		}
+		//check for current spots with a wolf
+		for(int i = 0; i < 20; i++) {
+			for(int j = 0; j < 20; j++) {
+				//if there is a wolf on the space that has not yet been moved
+				if(wPosition[i][j] == true && wMoved[i][j] == false) {
+					pos1 = r.nextInt(20);
+					pos2 = r.nextInt(20);
+					wPosition[pos1][pos2] = true;
+					wMoved[pos1][pos2] = true;
+					wPosition[i][j] = false;
 				}
 			}
 		}
+		return wPosition;
+	}
+	
+	public boolean[][] wEat(boolean[][] rabPosition) {
+		
+		//loops to find all wolves and to see if they are fed or not
+		for(int i = 0; i < 20; i ++) {
+			for(int j = 0; j < 20; j++) {
+				if(wPosition[i][j] == true && wFull[i][j] == false) {
+					
+					try {
+						if(rabPosition[i][j] == true) {
+							rabPosition[i][j] = false;
+							wFull[i][j] = true;
+						}else if(rabPosition[i+1][j] == true) {
+							rabPosition[i+1][j] = false;
+							wFull[i][j] = true;
+						}else if(rabPosition[i+1][j+1] == true) {
+							rabPosition[i+1][j+1] = false;
+							wFull[i][j] = true;
+						}else if(rabPosition[i+1][j-1] == true) {
+							rabPosition[i+1][j-1] = false;
+							wFull[i][j] = true;
+						}else if(rabPosition[i][j+1] == true) {
+							rabPosition[i][j+1] = false;
+							wFull[i][j] = true;
+						}else if(rabPosition[i][j-1] == true) {
+							rabPosition[i][j-1] = false;
+							wFull[i][j] = true;
+						}else if(rabPosition[i-1][j] == true) {
+							rabPosition[i-1][j] = false;
+							wFull[i][j] = true;
+						}else if(rabPosition[i-1][j+1] == true) {
+							rabPosition[i-1][j+1] = false;
+							wFull[i][j] = true;
+						}else if(rabPosition[i-1][j-1] == true) {
+							rabPosition[i-1][j-1] = false;
+							wFull[i][j] = true;
+						}
+					}catch(Exception e) {
+						
+					}
+					
+				}
+			}
+		}
+		return rabPosition;
+	}
+	
+	public boolean[][] wReproduce(boolean [][]position){
+		//check for fed wolves
+		
+		//finds the next population of the wolves
+		if(wolfI >= 2) {
+			wolfF = (rate*fedMod) * (wolfI) * (1-(wolfI/400));
+			wolfF= (int) Math.round(wolfF);
+		}
+		wolf = wolfI - wolfF;
+		
 		
 		
 		return position;
