@@ -54,7 +54,8 @@ public class Rabbit {
 	public boolean[][] tick(boolean[][]forestGrid) {
 		//Wrap edges - when i or j = 20, set i or j = 0, and when i or j = -1, set i or j = 19
 		Random r = new Random();
-		int chooseTree, error;
+		int chooseTree, error, exception, direction;
+		boolean validMove;
 		//For each rabbit:
 		for(int i = 0;i < 20;i++) {
 			for(int j = 0;j < 20;j++) {
@@ -112,39 +113,145 @@ public class Rabbit {
 							if(rabbitSpawn[i - 1][j] == true || rabbitSpawn[i + 1][j] == true || rabbitSpawn[i][j - 1] == true || rabbitSpawn[i][j + 1] == true) {
 								if(rabbitSpawn[i - 1][j] == false)	{
 									rabbitSpawn[i - 1][j] = true;
+									actionUsed[i][j] = true;
 								}else if(rabbitSpawn[i + 1][j] == false) {
 									rabbitSpawn[i + 1][j] = true;
+									actionUsed[i][j] = true;
 								}else if(rabbitSpawn[i][j - 1] == false) {
 									rabbitSpawn[i][j - 1] = true;
+									actionUsed[i][j] = true;
 								}else if(rabbitSpawn[i][j + 1] == false) {
 									rabbitSpawn[i][j + 1] = true;
+									actionUsed[i][j] = true;
 								}
 							}
 						}catch(Exception e) {
 							error = e.getStackTrace()[0].getLineNumber();
 							if(error == 112) {
-								if(i == 0) {
+								try {
+									if(rabbitSpawn[i - 1][j] == false)	{
+										rabbitSpawn[i - 1][j] = true;
+										actionUsed[i][j] = true;
+									}else if(rabbitSpawn[i + 1][j] == false) {
+										rabbitSpawn[i + 1][j] = true;
+										actionUsed[i][j] = true;
+									}else if(rabbitSpawn[i][j - 1] == false) {
+										rabbitSpawn[i][j - 1] = true;
+										actionUsed[i][j] = true;
+									}else if(rabbitSpawn[i][j + 1] == false) {
+										rabbitSpawn[i][j + 1] = true;
+										actionUsed[i][j] = true;
+									}
+								}catch(Exception ex) {
+									exception = ex.getStackTrace()[0].getLineNumber();
 									
-								}
-								if(i == 19) {
-									
-								}
-								if(j == 0) {
-									
-								}
-								if(j == 19) {
-									
+									if(exception == 131) {
+										rabbitSpawn[19][j] = true;
+										actionUsed[i][j] = true;
+									}else if(exception == 134) {
+										rabbitSpawn[0][j] = true;
+										actionUsed[i][j] = true;
+									}else if(exception == 137) {
+										rabbitSpawn[i][19] = true;
+										actionUsed[i][j] = true;
+									}else if(exception == 140) {
+										rabbitSpawn[i][0] = true;
+										actionUsed[i][j] = true;
+									}
 								}
 							}else if(error == 113) {
-								
-							}else if(error == 115) {
-								
-							}else if(error == 117) {
-								
+								rabbitSpawn[19][j] = true;
+								actionUsed[i][j] = true;
+							}else if(error == 116) {
+								rabbitSpawn[0][j] = true;
+								actionUsed[i][j] = true;
 							}else if(error == 119) {
-								
+								rabbitSpawn[i][19] = true;
+								actionUsed[i][j] = true;
+							}else if(error == 122) {
+								rabbitSpawn[i][0] = true;
+								actionUsed[i][j] = true;
 							}
 						}
+					}
+					
+					//Else, move
+					validMove = false;
+					
+					if(actionUsed[i][j] == false) {
+						direction = r.nextInt(4);
+						
+						try {
+							if(direction == 0) {
+								if(rabbitSpawn[i - 1][j] == false) {
+									validMove = true;
+								}
+							}else if(direction == 1) {
+								if(rabbitSpawn[i + 1][j] == false) {
+									validMove = true;
+								}
+							}else if(direction == 2) {
+								if(rabbitSpawn[i][j - 1] == false) {
+									validMove = true;
+								}
+							}else if(direction == 3) {
+								if(rabbitSpawn[i][j + 1] == false) {
+									validMove = true;
+								}
+							}
+						}catch(Exception e) {
+							error = e.getStackTrace()[0].getLineNumber();
+							
+							if(error == 186) {
+								if(rabbitSpawn[19][j] == false) {
+									validMove = true;
+								}
+							}else if(error == 190) {
+								if(rabbitSpawn[0][j] == false) {
+									validMove = true;
+								}
+							}else if(error == 194) {
+								if(rabbitSpawn[i][19] == false) {
+									validMove = true;
+								}
+							}else if(error == 198) {
+								if(rabbitSpawn[i][0] == false) {
+									validMove = true;
+								}
+							}
+						}
+						
+						if(validMove == true) {
+							try {
+								if(direction == 0) {
+									rabbitSpawn[i][j] = false;
+									rabbitSpawn[i - 1][j] = true;
+								}else if(direction == 1) {
+									rabbitSpawn[i][j] = false;
+									rabbitSpawn[i + 1][j] = true;
+								}else if(direction == 2) {
+									rabbitSpawn[i][j] = false;
+									rabbitSpawn[i][j - 1] = true;
+								}else if(direction == 3) {
+									rabbitSpawn[i][j] = false;
+									rabbitSpawn[i][j + 1] = true;
+								}
+							}catch(Exception e) {
+								error = e.getStackTrace()[0].getLineNumber();
+								
+								if(error == 228) {
+									rabbitSpawn[19][j] = true;
+								}else if(error == 231) {
+									rabbitSpawn[0][j] = true;
+								}else if(error == 234) {
+									rabbitSpawn[i][19] = true;
+								}else if(error == 237) {
+									rabbitSpawn[i][0] = true;
+								}
+							}
+							
+						}
+						
 					}
 					
 				}
@@ -152,5 +259,9 @@ public class Rabbit {
 		}
 		
 		return forestGrid;
+	}
+	
+	public boolean[][] returnRabbitGrid() {
+		return rabbitSpawn;
 	}
 }
