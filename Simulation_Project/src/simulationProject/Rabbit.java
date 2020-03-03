@@ -22,7 +22,7 @@ public class Rabbit {
 	 * Gets number of rabbits on the grid
 	 * @return
 	 */
-	public static int getRabbits() {
+	public int getRabbits() {
 		int spawnNum;
 		Scanner input = new Scanner(System.in);
 		do {
@@ -34,16 +34,16 @@ public class Rabbit {
 	/**
 	 * Creates grid which shows where all the rabbits are
 	 */
-	public void createRabbitGrid() {
-		int x, y, inp;
+	public void createRabbitGrid(int rabbits) {
+		int x, y;
 		Random r = new Random();
 		
-		inp = Rabbit.getRabbits();
-		
-		for(int i = 0; i < inp; i++) {
-			x = r.nextInt(20);
-			y = r.nextInt(20);
-		
+		for(int i = 0; i < rabbits; i++) {
+			do {
+				x = r.nextInt(20);
+				y = r.nextInt(20);
+			}while(rabbitSpawn[x][y] == true);
+			
 			rabbitSpawn[x][y] = true;	
 		}
 			
@@ -87,19 +87,19 @@ public class Rabbit {
 							 * OutOfBoundsException is thrown
 							 */
 							error = e.getStackTrace()[0].getLineNumber();
-							if(error == 64) {
+							if(error == 66) {
 								fed[i][j] = true;
 								forestGrid[19][j] = false;
 								actionUsed[i][j] = true;
-							}else if(error == 68) {
+							}else if(error == 70) {
 								fed[i][j] = true;
 								forestGrid[0][j] = false;
 								actionUsed[i][j] = true;
-							}else if(error == 72) {
+							}else if(error == 74) {
 								fed[i][j] = true;
 								forestGrid[i][19] = false;
 								actionUsed[i][j] = true;
-							}else if(error == 76) {
+							}else if(error == 78) {
 								fed[i][j] = true;
 								forestGrid[i][0] = false;
 								actionUsed[i][j] = true;
@@ -127,7 +127,7 @@ public class Rabbit {
 							}
 						}catch(Exception e) {
 							error = e.getStackTrace()[0].getLineNumber();
-							if(error == 112) {
+							if(error == 113) {
 								try {
 									if(rabbitSpawn[i - 1][j] == false)	{
 										rabbitSpawn[i - 1][j] = true;
@@ -145,30 +145,30 @@ public class Rabbit {
 								}catch(Exception ex) {
 									exception = ex.getStackTrace()[0].getLineNumber();
 									
-									if(exception == 131) {
+									if(exception == 132) {
 										rabbitSpawn[19][j] = true;
 										actionUsed[i][j] = true;
-									}else if(exception == 134) {
+									}else if(exception == 135) {
 										rabbitSpawn[0][j] = true;
 										actionUsed[i][j] = true;
-									}else if(exception == 137) {
+									}else if(exception == 138) {
 										rabbitSpawn[i][19] = true;
 										actionUsed[i][j] = true;
-									}else if(exception == 140) {
+									}else if(exception == 141) {
 										rabbitSpawn[i][0] = true;
 										actionUsed[i][j] = true;
 									}
 								}
-							}else if(error == 113) {
+							}else if(error == 114) {
 								rabbitSpawn[19][j] = true;
 								actionUsed[i][j] = true;
-							}else if(error == 116) {
+							}else if(error == 117) {
 								rabbitSpawn[0][j] = true;
 								actionUsed[i][j] = true;
-							}else if(error == 119) {
+							}else if(error == 120) {
 								rabbitSpawn[i][19] = true;
 								actionUsed[i][j] = true;
-							}else if(error == 122) {
+							}else if(error == 123) {
 								rabbitSpawn[i][0] = true;
 								actionUsed[i][j] = true;
 							}
@@ -177,10 +177,13 @@ public class Rabbit {
 					
 					//Else, move
 					validMove = false;
-					
+					//Check if the rabbit has done anything else this turn
 					if(actionUsed[i][j] == false) {
 						direction = r.nextInt(4);
-						
+						/*
+						 * Check if move is valid
+						 * Check if there is another rabbit on the square the rabbit is about to move to
+						 */
 						try {
 							if(direction == 0) {
 								if(rabbitSpawn[i - 1][j] == false) {
@@ -199,6 +202,7 @@ public class Rabbit {
 									validMove = true;
 								}
 							}
+						//Catch corner and edge exceptions
 						}catch(Exception e) {
 							error = e.getStackTrace()[0].getLineNumber();
 							
