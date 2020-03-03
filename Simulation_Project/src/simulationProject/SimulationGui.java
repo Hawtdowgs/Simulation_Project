@@ -47,8 +47,6 @@ public class SimulationGui {
 			}
 		}
 		
-		
-		
 		frame.setContentPane(panel);
 		frame.setVisible(true);	
 	}

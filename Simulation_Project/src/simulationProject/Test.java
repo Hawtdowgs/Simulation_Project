@@ -13,6 +13,7 @@ public class Test {
 		Scanner input = new Scanner(System.in);
 		Rabbit rabbit = new Rabbit();
 		int startTrees, startRabbits, startWolves;
+		boolean running = true;
 		boolean[][]forestGrid = new boolean[20][20];
 		
 		System.out.print("Choose number of starting trees: ");
@@ -26,6 +27,13 @@ public class Test {
 		startRabbits = rabbit.getRabbits();
 		rabbit.createRabbitGrid(startRabbits);
 		SimulationGui simulationGui = new SimulationGui(forestGrid);
+		
+		while(running == true) {
+			forest.checkForestReproductionSquares();
+			forest.reproduce();
+			forestGrid = forest.returnForestGrid();
+			rabbit.tick(forestGrid);
+		}
 		
 		
 	}
