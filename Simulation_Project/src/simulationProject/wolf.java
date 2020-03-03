@@ -18,6 +18,7 @@ private int initial, sex, pos1, pos2, fedMod;
 		wolfF = 0;
 		fedMod = 0;
 	}
+	
 	public void wSetUp() {
 		Random r = new Random();
 		Scanner input = new Scanner(System.in);
@@ -100,11 +101,15 @@ private int initial, sex, pos1, pos2, fedMod;
 			for(int j = 0; j < 20; j++) {
 				//if there is a wolf on the space that has not yet been moved
 				if(wPosition[i][j] == true && wMoved[i][j] == false) {
+					do {
 					pos1 = r.nextInt(20);
 					pos2 = r.nextInt(20);
-					wPosition[pos1][pos2] = true;
-					wMoved[pos1][pos2] = true;
-					wPosition[i][j] = false;
+					if(wPosition[pos1][pos2] == false) {
+						wPosition[pos1][pos2] = true;
+						wMoved[pos1][pos2] = true;
+						wPosition[i][j] = false;
+					}
+					}while(wPosition[i][j] == true);
 				}
 			}
 		}
@@ -112,7 +117,7 @@ private int initial, sex, pos1, pos2, fedMod;
 	}
 	
 	public boolean[][] wEat(boolean[][] rabPosition) {
-		
+		int error;
 		//loops to find all wolves and to see if they are fed or not
 		for(int i = 0; i < 20; i ++) {
 			for(int j = 0; j < 20; j++) {
@@ -148,7 +153,35 @@ private int initial, sex, pos1, pos2, fedMod;
 							wFull[i][j] = true;
 						}
 					}catch(Exception e) {
+						error = e.getStackTrace()[0].getLineNumber();
 						
+						if(error == 122) {
+							
+						}else if(error == 126) {
+							rabPosition[0][j] = false;
+							wFull[i][j] = true;
+						}else if(error == 129) {
+							rabPosition[0][0] = false;
+							wFull[i][j] = true;
+						}else if(error == 132) {
+							rabPosition[0][19] = false;
+							wFull[i][j] = true;
+						}else if(error == 135) {
+							rabPosition[i][0] = false;
+							wFull[i][j] = true;
+						}else if(error == 138) {
+							rabPosition[i][19] = false;
+							wFull[i][j] = true;
+						}else if(error == 141) {
+							rabPosition[19][j] = false;
+							wFull[i][j] = true;
+						}else if(error == 144) {
+							rabPosition[19][0] = false;
+							wFull[i][j] = true;
+						}else if(error == 147) {
+							rabPosition[19][19] = false;
+							wFull[i][j] = true;
+						}
 					}
 					
 				}
@@ -157,19 +190,100 @@ private int initial, sex, pos1, pos2, fedMod;
 		return rabPosition;
 	}
 	
-	public boolean[][] wReproduce(boolean [][]position){
-		//check for fed wolves
+	public boolean[][] wReproduce(){
+		double fed = 0, wolves = 0, fMod = 0,sMod = 0, male = 0, female = 0;
+		int newWolf = 0, ranPos = 0, error;
+		boolean rep = false;
+		Random r = new Random();
 		
-		//finds the next population of the wolves
-		if(wolfI >= 2) {
-			wolfF = (rate*fedMod) * (wolfI) * (1-(wolfI/400));
-			wolfF= (int) Math.round(wolfF);
+		//check for fed wolves and the wolves sex
+		for(int i = 0; i < 20; i++) {
+			for(int j = 0; j < 20; j++) {
+					if(wPosition[i][j] == true) {
+						wolves ++;
+						if(wFull[i][j] == true) {
+							fed++;
+						if(wSex[i][j] == true) {
+							male++;
+						}else if(wSex[i][j] == false) {
+							female++;
+						}
+					}	
+				}
+			}
 		}
-		wolf = wolfI - wolfF;
+		//uses the sex and fullness affect the reproduction
+		if(fed/wolves == 0) {
+			fMod = 1;
+		}else if(fed/wolves > 0 && fed/wolves < .2) {
+			fMod = 1.1;
+		}else if(fed/wolves > .2 && fed/wolves < .5) {
+			fMod = 1.2;
+		}else if(fed/wolves > .5 && fed/wolves < .7) {
+			fMod = 1.3;
+		}else if(fed/wolves > .7 && fed/wolves < .9) {
+			fMod = 1.4;
+		}else if(fed/wolves == 1) {
+			fMod = 1.5;
+		}
+		if(female/male == 0) {
+			sMod = 1;
+		}else if(female/male > 0 && female/male <= .2) {
+			sMod = 1.1;
+		}else if(female/male > .2 && female/male <= .5) {
+			sMod = 1.2;
+		}else if(female/male > .5 && female/male <= .7) {
+			sMod = 1.3;
+		}else if(female/male > .7 && female/male < 1) {
+			sMod = 1.4;
+		}else if(female/male >= 1) {
+			sMod = 1.5;
+		}
+		//find the next population of the wolves
+		if(male >= 1 && female >= 1) {
+			wolfF = (rate*fMod*sMod) * (wolves) * (1-(wolves/400));
+			wolfF = (int) Math.round(wolfF);
+		}else {
+			wolfF = wolves;
+		}
+		//finds how many wolves to add
+		newWolf = (int) (wolfF - wolves);
+		//places the new wolves next to a mother wolf
+		for(int w = 0; w < newWolf; w++) {
+			if(newWolf > 0) {
+				for(int i = 0; i < 20; i++) {
+					for(int j = 0; j < 20; j ++) {
+						if(wSex[i][j] = false) {
+							ranPos = r.nextInt(8);
+							try {
+								if(ranPos == 0) {
+									wPosition[i-1][j-1] = true;
+								}else if(ranPos == 1) {
+									wPosition[i+1][j] = true;
+								}else if(ranPos == 2) {
+									wPosition[i+1][j+1] = true;
+								}else if(ranPos == 3) {
+									wPosition[i+1][j-1] = true;
+								}else if(ranPos == 4) {
+									wPosition[i][j+1] = true;
+								}else if(ranPos == 5) {
+									wPosition[i][j-1] = true;
+								}else if(ranPos == 6) {
+									wPosition[i-1][j] = true;
+								}else if(ranPos == 7) {
+									wPosition[i-1][j+1] = true;
+								}
+							}catch(Exception e) {
+								error = e.getStackTrace()[0].getLineNumber();
+								
+							}
+						}
+					}
+				}
+			}
+		}
 		
-		
-		
-		return position;
+		return wPosition;
 	}
 	
 }
