@@ -96,9 +96,7 @@ public SimulationGui(boolean[][]forestGrid) {
 			}
 		}
 		
-			
 
-		
 		frame.setContentPane(panel);
 		frame.setVisible(true);	
 	}

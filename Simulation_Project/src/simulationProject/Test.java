@@ -12,7 +12,9 @@ public class Test {
 
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
+		Rabbit rabbit = new Rabbit();
 		int startTrees, startRabbits, startWolves;
+		boolean running = true;
 		boolean[][]forestGrid = new boolean[20][20];
 		boolean[][]RabbitSpawn = new boolean[20][20];
 		
@@ -24,25 +26,24 @@ public class Test {
 		}while(startTrees < 0 || startTrees > 400);
 
 		
-		
-		
-		
-		
-		
-		
 		Forest forest = new Forest(startTrees, 3);
+		
+		
 		forest.generateForestGrid();
 		forestGrid = forest.returnForestGrid();
-		
-		
-		//while(SimulationGui.reset == false){
+		startRabbits = rabbit.getRab();
+		rabbit.createRabbitGrid(startRabbits);
+
+		SimulationGui simulationGui = new SimulationGui(forestGrid);
+
+		while(running == true) {
 			forest.checkForestReproductionSquares();
 			forest.reproduce();
-			forest.returnForestGrid();
-		//}
-		
-		SimulationGui simulationGui = new SimulationGui(forestGrid);
-		
+			forestGrid = forest.returnForestGrid();
+			rabbit.tick(forestGrid);
+		}
+
+
 		
 		
 	}
