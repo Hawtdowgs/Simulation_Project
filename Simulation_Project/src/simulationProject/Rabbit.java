@@ -1,3 +1,4 @@
+
 /*
  * Konner Friesen	
  * Feb 19, 2020
@@ -18,11 +19,15 @@ public class Rabbit {
 		rabbitSpawn = new boolean[20][20];
 		actionUsed = new boolean[20][20];
 	}
+
+
+
 	/**
-	 * Gets number of rabbits on the grid
+	 * gets a value  from the player for how many rabbits are in the simulation
 	 * @return
 	 */
-	public int getRabbits() {
+	public static int getRab() {
+
 		int spawnNum;
 		Scanner input = new Scanner(System.in);
 		do {
@@ -31,23 +36,16 @@ public class Rabbit {
 		}while(spawnNum < 1 || spawnNum > 399);
 		return spawnNum;
 	}
+
 	/**
 	 * Creates grid which shows where all the rabbits are
 	 */
 	public void createRabbitGrid(int rabbits) {
 		int x, y;
-		Random r = new Random();
-		
-		for(int i = 0; i < rabbits; i++) {
-			do {
-				x = r.nextInt(20);
-				y = r.nextInt(20);
-			}while(rabbitSpawn[x][y] == true);
-			
-			rabbitSpawn[x][y] = true;	
-		}
-			
+
+	
 	}
+
 	/**
 	 * Codes what the rabbits do when the simulation increments
 	 */
@@ -268,4 +266,10 @@ public class Rabbit {
 	public boolean[][] returnRabbitGrid() {
 		return rabbitSpawn;
 	}
+
+
+		
+
+
 }
+

@@ -10,10 +10,11 @@ public class SimulationGui {
 	private JButton tick;
 	private JLabel[][]labelGrid;
 	
-	public SimulationGui(boolean[][]forestGrid) {
+
+public SimulationGui(boolean[][]forestGrid) {
 		frame = new JFrame("Nature Simulator");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(800, 600);
+		frame.setSize(1400, 800);
 		frame.setLocationRelativeTo(null);
 		
 		panel = new JPanel(new GridBagLayout());
@@ -31,15 +32,22 @@ public class SimulationGui {
 		c.gridwidth = 10;
 		panel.add(tick, c);
 		
-		labelGrid = new JLabel[20][20];
+		ImageIcon grey = new ImageIcon("images/grey square.png");
+		ImageIcon green = new ImageIcon("images/green square.jpg");
+		JLabel[][] labelGrid = new JLabel[20][20];
+
 		
 		for(int i = 0;i < 20;i++) {
 			for(int j = 0;j < 20;j++) {
+				labelGrid[i][j] = new JLabel();
+				
 				if(forestGrid[i][j] = false) {
-					labelGrid[i][j].setIcon(new ImageIcon("images/grey square.png"));
+					labelGrid[i][j].setIcon(grey);
 				}else{
-					labelGrid[i][j].setIcon(new ImageIcon("images/green square.png"));
+					labelGrid[i][j].setIcon(green);
+				
 				}
+				
 				c.gridx = i;
 				c.gridy = j + 1;
 				c.gridwidth = 1;
@@ -47,6 +55,7 @@ public class SimulationGui {
 			}
 		}
 		
+
 		frame.setContentPane(panel);
 		frame.setVisible(true);	
 	}
