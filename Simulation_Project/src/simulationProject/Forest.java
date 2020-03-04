@@ -1,5 +1,6 @@
 package simulationProject;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class Forest {
@@ -18,12 +19,17 @@ public class Forest {
 	
 	public void generateForestGrid() {
 		int x, y;
+		
 		for(int i = 0;i < initialForestSquares;i++) {
+			
 			do {
+				
 				x = r.nextInt(20);
 				y = r.nextInt(20);
-			}while(forestGrid[x][y] = true);
+				
+			}while(forestGrid[x][y] == true);
 			forestGrid[x][y] = true;
+			
 		}
 	}
 	
@@ -36,6 +42,7 @@ public class Forest {
 		//For each square in the forest grid:
 		for(int i = 0;i < 20;i++) {
 			for(int j = 0;j < 20;j++) {
+				
 				//Corner cases: check only the squares next to the selected square which are inside the grid
 				if(i == 0 && j == 0) {
 					if(forestGrid[i + 1][j] == true || forestGrid[i][j + 1] == true) {
