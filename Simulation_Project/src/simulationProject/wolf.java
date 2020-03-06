@@ -3,6 +3,7 @@ import java.util.Random;
 import java.util.Scanner;
 public class wolf {
 private boolean[][] wPosition, wSex, wFull, wMove, wMoved;
+private int[][] unfed;
 private double rate, wolf, wolfI, wolfF;
 private int initial, sex, pos1, pos2, fedMod;
 	@SuppressWarnings("null")
@@ -12,6 +13,7 @@ private int initial, sex, pos1, pos2, fedMod;
 		wFull = new boolean[20][20];
 		wMove = new boolean[20][20];
 		wMoved = new boolean[20][20];
+		unfed = new int[20][20];
 		wolf = 0;
 		rate = 0;
 		wolfI = 0;
@@ -23,7 +25,6 @@ private int initial, sex, pos1, pos2, fedMod;
 		Random r = new Random();
 		Scanner input = new Scanner(System.in);
 		Scanner in = new Scanner(System.in);
-		
 		boolean validRate = false, validStart;
 		
 		//loops until a valid number has been entered
@@ -52,16 +53,12 @@ private int initial, sex, pos1, pos2, fedMod;
 			}
 		}while(validRate == false);
 		
-		
-		
-		
 	}
 	
 	@SuppressWarnings("null")
 	public boolean[][] wSpawn(){
 		Scanner input = new Scanner(System.in);
 		Random r = new Random();
-		
 		
 		//sets every space to a non wolf
 				for(int i = 0; i < 20; i ++) {
@@ -117,12 +114,11 @@ private int initial, sex, pos1, pos2, fedMod;
 	}
 	
 	public boolean[][] wEat(boolean[][] rabPosition) {
-		int error;
+		int error = 0;
 		//loops to find all wolves and to see if they are fed or not
 		for(int i = 0; i < 20; i ++) {
 			for(int j = 0; j < 20; j++) {
 				if(wPosition[i][j] == true && wFull[i][j] == false) {
-					
 					try {
 						if(rabPosition[i][j] == true) {
 							rabPosition[i][j] = false;
@@ -155,61 +151,126 @@ private int initial, sex, pos1, pos2, fedMod;
 					}catch(Exception e) {
 						error = e.getStackTrace()[0].getLineNumber();
 						
-						if(error == 122) {
-							
-						}else if(error == 126) {
-							rabPosition[0][j] = false;
-							wFull[i][j] = true;
+						}if(error == 126) {
+							if(rabPosition[0][j] == true) {
+								rabPosition[0][j] = false;
+								wFull[i][j] = true;
+							}
 						}else if(error == 129) {
-							rabPosition[0][0] = false;
+							if(i == 19 && j == 19) {
+								if(rabPosition[0][0] == true) {
+									rabPosition[0][0] = false;
+									wFull[i][j] = true;
+								}
+							}else if(i == 19) {
+								if(rabPosition[0][j] == true) {
+									rabPosition[0][j] = false;
+									wFull[i][j] = true;
+								}
+							}else if(j == 19) {
+								if(rabPosition[i][0] == true) {
+									rabPosition[i][0] = false;
+									wFull[i][j] = true;
+								}
+							}
 							wFull[i][j] = true;
 						}else if(error == 132) {
-							rabPosition[0][19] = false;
+							if(i == 19 && j == 0) {
+								if(rabPosition[0][19] == true) {
+									rabPosition[0][19] = false;	
+									wFull[i][j] = true;
+								}
+							}else if(i == 19) {
+								if(rabPosition[0][j] == true) {
+									rabPosition[0][j] = false;
+									wFull[i][j] = true;
+								}
+							}else if(j == 0) {
+								if(rabPosition[i][19] == true) {
+									rabPosition[i][19] = false;
+									wFull[i][j] = true;
+								}
+							}
 							wFull[i][j] = true;
 						}else if(error == 135) {
-							rabPosition[i][0] = false;
-							wFull[i][j] = true;
+							if(rabPosition[i][0] == true) {
+								rabPosition[i][0] = false;
+								wFull[i][j] = true;
+							}
 						}else if(error == 138) {
-							rabPosition[i][19] = false;
-							wFull[i][j] = true;
+							if(rabPosition[i][19] == true) {
+								rabPosition[i][19] = false;
+								wFull[i][j] = true;
+							}
 						}else if(error == 141) {
-							rabPosition[19][j] = false;
-							wFull[i][j] = true;
+							if(rabPosition[19][i] == true) {
+								rabPosition[19][j] = false;
+								wFull[i][j] = true;
+							}
 						}else if(error == 144) {
-							rabPosition[19][0] = false;
-							wFull[i][j] = true;
+							if(i == 0 && j == 19) {
+								if(rabPosition[19][0] == true) {
+									rabPosition[19][0] = false;
+									wFull[i][j] = true;
+								}
+							}else if(i == 0) {
+								if(rabPosition[19][j] == true) {
+									rabPosition[19][j] = false;
+									wFull[i][j] = true;
+								}
+							}else if(j == 19) {
+								if(rabPosition[i][0] == true) {
+									rabPosition[i][0] = false;
+									wFull[i][j] = true;
+								}
+							}
+							
 						}else if(error == 147) {
-							rabPosition[19][19] = false;
-							wFull[i][j] = true;
+							if(rabPosition[19][19] == true) {
+								rabPosition[19][19] = false;
+								wFull[i][j] = true;
+							}
 						}
 					}
+				}		
 					
-				}
 			}
-		}
 		return rabPosition;
 	}
 	
 	public boolean[][] wReproduce(){
 		double fed = 0, wolves = 0, fMod = 0,sMod = 0, male = 0, female = 0;
 		int newWolf = 0, ranPos = 0, error;
-		boolean rep = false;
+		boolean place = false;
 		Random r = new Random();
 		
-		//check for fed wolves and the wolves sex
+		//check for fed wolves and the wolves sex, as well as kills starving and old wolves
 		for(int i = 0; i < 20; i++) {
 			for(int j = 0; j < 20; j++) {
+				
+				//is there a wolf on this position
 					if(wPosition[i][j] == true) {
 						wolves ++;
+						
+						//has this wolf been fed
 						if(wFull[i][j] == true) {
 							fed++;
+						}else if(wFull[i][j] == false){
+							unfed[i][j] ++;
+							
+							//has it starved
+							if(unfed[i][j] == 5) {
+								wPosition[i][j] = false;
+							} 
+						}
+						
+						//what is the sex of the wolf
 						if(wSex[i][j] == true) {
 							male++;
 						}else if(wSex[i][j] == false) {
 							female++;
 						}
-					}	
-				}
+					}
 			}
 		}
 		//uses the sex and fullness affect the reproduction
@@ -240,7 +301,7 @@ private int initial, sex, pos1, pos2, fedMod;
 			sMod = 1.5;
 		}
 		//find the next population of the wolves
-		if(male >= 1 && female >= 1) {
+		if(male > 0 && female > 0) {
 			wolfF = (rate*fMod*sMod) * (wolves) * (1-(wolves/400));
 			wolfF = (int) Math.round(wolfF);
 		}else {
@@ -255,28 +316,47 @@ private int initial, sex, pos1, pos2, fedMod;
 					for(int j = 0; j < 20; j ++) {
 						if(wSex[i][j] = false) {
 							ranPos = r.nextInt(8);
-							try {
-								if(ranPos == 0) {
-									wPosition[i-1][j-1] = true;
-								}else if(ranPos == 1) {
-									wPosition[i+1][j] = true;
-								}else if(ranPos == 2) {
-									wPosition[i+1][j+1] = true;
-								}else if(ranPos == 3) {
-									wPosition[i+1][j-1] = true;
-								}else if(ranPos == 4) {
-									wPosition[i][j+1] = true;
-								}else if(ranPos == 5) {
-									wPosition[i][j-1] = true;
-								}else if(ranPos == 6) {
-									wPosition[i-1][j] = true;
-								}else if(ranPos == 7) {
-									wPosition[i-1][j+1] = true;
+							//makes sure it is a valid spot that the new wolf is places on
+							do {
+								try {
+									if(ranPos == 0) {
+										wPosition[i-1][j-1] = true;
+									}else if(ranPos == 1) {
+										wPosition[i+1][j] = true;
+									}else if(ranPos == 2) {
+										wPosition[i+1][j+1] = true;
+									}else if(ranPos == 3) {
+										wPosition[i+1][j-1] = true;
+									}else if(ranPos == 4) {
+										wPosition[i][j+1] = true;
+									}else if(ranPos == 5) {
+										wPosition[i][j-1] = true;
+									}else if(ranPos == 6) {
+										wPosition[i-1][j] = true;
+									}else if(ranPos == 7) {
+										wPosition[i-1][j+1] = true;
+									}
+								}catch(Exception e) {
+									error = e.getStackTrace()[0].getLineNumber();
+									if(error == 269) {
+										place = false;
+									}else if(error == 271) {
+										place = false;
+									}else if(error == 273) {
+										place = false;
+									}else if(error == 275) {
+										place = false;
+									}else if(error == 277) {
+										place = false;
+									}else if(error == 279) {
+										place = false;
+									}else if(error == 281) {
+										place = false;
+									}else if(error == 283) {
+										place = false;
+									}
 								}
-							}catch(Exception e) {
-								error = e.getStackTrace()[0].getLineNumber();
-								
-							}
+							}while(place == false);
 						}
 					}
 				}

@@ -8,15 +8,24 @@ import java.util.Scanner;
 import java.util.Random;
 
 public class Test {
-	Rabbit rabbit = new Rabbit();
 
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
 		int startTrees, startRabbits, startWolves;
 		boolean[][]forestGrid = new boolean[20][20];
 		boolean[][]RabbitSpawn = new boolean[20][20];
+		boolean[][] wolfPosition = new boolean[20][20];
+		wolf wolf = new wolf();
+		Rabbit rabbit = new Rabbit();
 		
+		wolf.wSetUp();
+		wolfPosition = wolf.wSpawn();
 		
+		System.out.println("how many rounds would you like to display?");
+		int round = input.nextInt();
+		for(int i = 0; i < round; i++) {
+			wolf.wReproduce();
+		}
 		
 		
 		
@@ -30,7 +39,6 @@ public class Test {
 		Forest forest = new Forest(startTrees, 3);
 		SimulationGui simulationGui = new SimulationGui(forestGrid);
 		
-		//the code ceases at this moment
 		forest.generateForestGrid();
 		
 		forestGrid = forest.returnForestGrid();
