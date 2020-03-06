@@ -31,19 +31,6 @@ public SimulationGui(boolean[][]forestGrid) {
 		c.gridwidth = 10;
 		start.setPreferredSize(new Dimension(100, 50));
 		start.setText("Start");
-		
-		start.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				reset = false;
-				
-				
-			}
-			
-		});
-		
 		panel.add(start, c);
 		
 		restart = new JButton();
@@ -51,22 +38,7 @@ public SimulationGui(boolean[][]forestGrid) {
 		c.gridy = 0;
 		c.gridwidth = 10;
 		restart.setPreferredSize(new Dimension(100, 50));
-		restart.setText("Restart");
-		
-		//restart action listener
-		restart.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				reset = true;
-				
-			}
-			
-		});
-			
-			
-		
+		restart.setText("Restart");		
 		
 		panel.add(restart, c);
 		
