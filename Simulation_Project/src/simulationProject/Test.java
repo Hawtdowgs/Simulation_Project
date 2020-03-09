@@ -16,12 +16,8 @@ public class Test {
 		int startTrees, startRabbits, startWolves;
 		boolean running = true;
 		boolean[][]forestGrid = new boolean[20][20];
-		boolean[][]RabbitSpawn = new boolean[20][20];
-		
-		
-		
-		
-		
+		boolean[][]rabbitSpawn = new boolean[20][20];
+		boolean[][]wPosition = new boolean[20][20];
 		
 		do {
 			System.out.print("Choose number of starting trees: ");
@@ -37,14 +33,15 @@ public class Test {
 		rabbit.createRabbitGrid(startRabbits);
 
 
-		SimulationGui simulationGui = new SimulationGui(forestGrid);
-		
+		SimulationGui simulationGui = new SimulationGui();
 
 		while(running == true) {
 			forest.checkForestReproductionSquares();
 			forest.reproduce();
 			forestGrid = forest.returnForestGrid();
 			rabbit.tick(forestGrid);
+			
+			simulationGui.updateGridData(forestGrid, rabbitSpawn, wPosition);
 		}
 
 		
