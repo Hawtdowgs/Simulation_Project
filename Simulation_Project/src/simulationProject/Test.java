@@ -1,5 +1,5 @@
 /*
- * Konner Friesen
+ * Konner Friesen, Gabriel Hamm, and Spencer Molloy
  * February 18, 2020
  */
 package simulationProject;

@@ -2,30 +2,28 @@ package simulationProject;
 import java.util.Random;
 import java.util.Scanner;
 public class wolf {
-private boolean[][] wPosition, wSex, wFull, wMove, wMoved;
+private boolean[][] wPosition, wSex, wFull, wMoved;
 private int[][] unfed;
 private double rate, wolf, wolfI, wolfF;
-private int initial, sex, pos1, pos2, fedMod;
+private int sex, pos1, pos2;
 	@SuppressWarnings("null")
 	public wolf() {
 		wPosition = new boolean[20][20];
 		wSex = new boolean[20][20];
 		wFull = new boolean[20][20];
-		wMove = new boolean[20][20];
 		wMoved = new boolean[20][20];
 		unfed = new int[20][20];
 		wolf = 0;
 		rate = 0;
+		wolf = 0;
 		wolfI = 0;
 		wolfF = 0;
-		fedMod = 0;
 	}
 	
 	public void wSetUp() {
-		Random r = new Random();
 		Scanner input = new Scanner(System.in);
 		Scanner in = new Scanner(System.in);
-		boolean validRate = false, validStart;
+		boolean validRate = false, validStart = false;
 		
 		//loops until a valid number has been entered
 		do {
@@ -43,7 +41,8 @@ private int initial, sex, pos1, pos2, fedMod;
 		//loops until a valid growth rate has been entered
 		do {
 			System.out.println("What it the reproductive rate of the wolves?");
-			System.out.println("values between 0 and 1 inclusive are valid:");
+			System.out.println("**CAUTION: values higher than 3.5 can give chaotic results**");
+			System.out.println("values between 1 and 3 are ideal:");
 			rate = input.nextDouble() * 100;
 			
 			if(rate < 0 || rate > 1) {
@@ -52,12 +51,10 @@ private int initial, sex, pos1, pos2, fedMod;
 				validRate = true;
 			}
 		}while(validRate == false);
-		
 	}
 	
 	@SuppressWarnings("null")
 	public boolean[][] wSpawn(){
-		Scanner input = new Scanner(System.in);
 		Random r = new Random();
 		
 		//sets every space to a non wolf
@@ -173,7 +170,6 @@ private int initial, sex, pos1, pos2, fedMod;
 									wFull[i][j] = true;
 								}
 							}
-							wFull[i][j] = true;
 						}else if(error == 132) {
 							if(i == 19 && j == 0) {
 								if(rabPosition[0][19] == true) {
@@ -191,7 +187,6 @@ private int initial, sex, pos1, pos2, fedMod;
 									wFull[i][j] = true;
 								}
 							}
-							wFull[i][j] = true;
 						}else if(error == 135) {
 							if(rabPosition[i][0] == true) {
 								rabPosition[i][0] = false;
@@ -226,9 +221,21 @@ private int initial, sex, pos1, pos2, fedMod;
 							}
 							
 						}else if(error == 147) {
-							if(rabPosition[19][19] == true) {
-								rabPosition[19][19] = false;
-								wFull[i][j] = true;
+							if(i == 0 && j == 0) {
+								if(rabPosition[19][19] == true) {
+									rabPosition[19][19] = false;
+									wFull[i][j] = true;
+								}
+							}else if(i == 0) {
+								if(rabPosition[19][j] == true) {
+									rabPosition[19][j] = false;
+									wFull[i][j] = true;
+								}
+							}else if(j == 0) {
+								if(rabPosition[i][19] == true) {
+									rabPosition[i][19] = false;
+									wFull[i][j] = true;
+								}
 							}
 						}
 					}
@@ -315,9 +322,9 @@ private int initial, sex, pos1, pos2, fedMod;
 				for(int i = 0; i < 20; i++) {
 					for(int j = 0; j < 20; j ++) {
 						if(wSex[i][j] = false) {
-							ranPos = r.nextInt(8);
 							//makes sure it is a valid spot that the new wolf is places on
 							do {
+								ranPos = r.nextInt(8);
 								try {
 									if(ranPos == 0) {
 										wPosition[i-1][j-1] = true;
@@ -338,21 +345,21 @@ private int initial, sex, pos1, pos2, fedMod;
 									}
 								}catch(Exception e) {
 									error = e.getStackTrace()[0].getLineNumber();
-									if(error == 269) {
+									if(error == 333) {
 										place = false;
-									}else if(error == 271) {
+									}else if(error == 335) {
 										place = false;
-									}else if(error == 273) {
+									}else if(error == 337) {
 										place = false;
-									}else if(error == 275) {
+									}else if(error == 339) {
 										place = false;
-									}else if(error == 277) {
+									}else if(error == 341) {
 										place = false;
-									}else if(error == 279) {
+									}else if(error == 343) {
 										place = false;
-									}else if(error == 281) {
+									}else if(error == 345) {
 										place = false;
-									}else if(error == 283) {
+									}else if(error == 347) {
 										place = false;
 									}
 								}
