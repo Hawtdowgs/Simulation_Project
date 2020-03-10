@@ -13,7 +13,9 @@ public class SimulationGui implements ActionListener{
 	private JLabel[][]labelGrid;
 	private ImageIcon grey, green;
 	private boolean[][]forestGrid, wPosition, rabbitSpawn;
-
+	/**
+	 * Constructor - sets up a GUI with a 20x20 grid of square lavels and two buttons at the top
+	 */
 	public SimulationGui() {
 		frame = new JFrame("Nature Simulator");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,13 +64,44 @@ public class SimulationGui implements ActionListener{
 		frame.setContentPane(panel);
 		frame.setVisible(true);	
 	}
-	
+	/**
+	 * Brings all of the new program data into the GUI class
+	 * @param forest
+	 * @param rabbit
+	 * @param wolf
+	 */
 	public void updateGridData(boolean[][]forest, boolean[][]rabbit, boolean[][]wolf) {
 		for(int i = 0;i < 20;i++) {
 			for(int j = 0;j < 20;j++) {
 				forestGrid[i][j] = forest[i][j];
 				rabbitSpawn[i][j] = rabbit[i][j];
 				wPosition[i][j] = wolf[i][j];
+			}
+		}
+	}
+	/**
+	 * Updates the GUI with the new data once a tick
+	 */
+	public void tick() {
+		for(int i = 0;i < 20;i++) {
+			for(int j = 0;j < 20;j++) {
+				if(forestGrid[i][j] == true) {
+					if(rabbitSpawn[i][j] == true) {
+						
+					}else if(wPosition[i][j] == true) {
+						
+					}else{
+						
+					}
+				}else{
+					if(rabbitSpawn[i][j] == true) {
+						
+					}else if(wPosition[i][j] == true) {
+						
+					}else{
+						
+					}
+				}
 			}
 		}
 	}

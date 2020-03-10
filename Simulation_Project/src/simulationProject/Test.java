@@ -42,6 +42,7 @@ public class Test {
 			rabbit.tick(forestGrid);
 			
 			simulationGui.updateGridData(forestGrid, rabbitSpawn, wPosition);
+			simulationGui.tick();
 		}
 
 		
