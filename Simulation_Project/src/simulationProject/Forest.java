@@ -1,5 +1,6 @@
 package simulationProject;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class Forest {
@@ -14,16 +15,22 @@ public class Forest {
 		forestReproductionRate = fr;
 		forestGrid = new boolean[20][20];
 		treeAge = new int[20][20];
+		reproducibleSquares = new boolean[20][20];
 	}
 	
 	public void generateForestGrid() {
 		int x, y;
+		
 		for(int i = 0;i < initialForestSquares;i++) {
+			
 			do {
+				
 				x = r.nextInt(20);
 				y = r.nextInt(20);
-			}while(forestGrid[x][y] = true);
+				
+			}while(forestGrid[x][y] == true);
 			forestGrid[x][y] = true;
+			
 		}
 	}
 	
@@ -32,103 +39,43 @@ public class Forest {
 	}
 	
 	public void checkForestReproductionSquares() {
+		int error;
 		//Compile a list of squares that are next to trees
 		//For each square in the forest grid:
 		for(int i = 0;i < 20;i++) {
 			for(int j = 0;j < 20;j++) {
-				//Corner cases: check only the squares next to the selected square which are inside the grid
-				if(i == 0 && j == 0) {
-					if(forestGrid[i + 1][j] == true || forestGrid[i][j + 1] == true) {
-						if(forestGrid[i][j] == false) {
-							reproducibleSquares[i][j] = true;
-						}else{
-							reproducibleSquares[i][j] = false;
+					try {
+						if(forestGrid[i][j] == true) {
+							if(forestGrid[i + 1][j] == false) {
+								reproducibleSquares[i + 1][j] = true;
+								
+							}if(forestGrid[i - 1][j] == false) {
+								reproducibleSquares[i - 1][j] = true;
+								
+							}if(forestGrid[i][j + 1] == false) {
+								reproducibleSquares[i][j + 1] = true;
+								
+							}if(forestGrid[i][j - 1] == false) {
+								reproducibleSquares[i][j - 1] = true;
+								
+							}	
 						}
-					}else{
-						reproducibleSquares[i][j] = false;
-					}
-				}else if(i == 0 && j == 19) {
-					if(forestGrid[i + 1][j] == true || forestGrid[i][j - 1] == true) {
-						if(forestGrid[i][j] == false) {
-							reproducibleSquares[i][j] = true;
-						}else{
-							reproducibleSquares[i][j] = false;
+					}catch(Exception e) {
+						error = e.getStackTrace()[0].getLineNumber();
+						System.out.println(error);
+						if(error == 49) {
+							if(forestGrid[0][j] == false) {
+								reproducibleSquares[0][j] = true;
+							}else if(error == 52) {
+								reproducibleSquares[19][j] = true;
+							}else if(error == 55) {
+								reproducibleSquares[i][0] = true;
+							}else if(error == 58) {
+								reproducibleSquares[i][19] = true;
+							}
 						}
-					}else{
-						reproducibleSquares[i][j] = false;
 					}
-				}else if(i == 19 && j == 0) {
-					if(forestGrid[i - 1][j] == true || forestGrid[i][j + 1] == true) {
-						if(forestGrid[i][j] == false) {
-							reproducibleSquares[i][j] = true;
-						}else{
-							reproducibleSquares[i][j] = false;
-						}
-					}else{
-						reproducibleSquares[i][j] = false;
-					}
-				}else if(i == 19 && j == 19) {
-					if(forestGrid[i - 1][j] == true || forestGrid[i][j - 1] == true) {
-						if(forestGrid[i][j] == false) {
-							reproducibleSquares[i][j] = true;
-						}else{
-							reproducibleSquares[i][j] = false;
-						}
-					}else{
-						reproducibleSquares[i][j] = false;
-					}
-				//Edge cases: check only the squares next to the selected square which are inside the grid	
-				}else if(i == 0) {
-					if(forestGrid[i + 1][j] == true || forestGrid[i][j - 1] == true || forestGrid[i][j + 1] == true) {
-						if(forestGrid[i][j] == false) {
-							reproducibleSquares[i][j] = true;
-						}else{
-							reproducibleSquares[i][j] = false;
-						}
-					}else{
-						reproducibleSquares[i][j] = false;
-					}
-				}else if(i == 19) {
-					if(forestGrid[i - 1][j] == true || forestGrid[i][j - 1] == true || forestGrid[i][j + 1] == true) {
-						if(forestGrid[i][j] == false) {
-							reproducibleSquares[i][j] = true;
-						}else{
-							reproducibleSquares[i][j] = false;
-						}
-					}else{
-						reproducibleSquares[i][j] = false;
-					}
-				}else if(j == 0) {
-					if(forestGrid[i - 1][j] == true || forestGrid[i + 1][j] == true || forestGrid[i][j + 1] == true) {
-						if(forestGrid[i][j] == false) {
-							reproducibleSquares[i][j] = true;
-						}else{
-							reproducibleSquares[i][j] = false;
-						}
-					}else{
-						reproducibleSquares[i][j] = false;
-					}
-				}else if(j == 19) {
-					if(forestGrid[i - 1][j] == true || forestGrid[i + 1][j] == true || forestGrid[i][j - 1] == true) {
-						if(forestGrid[i][j] == false) {
-							reproducibleSquares[i][j] = true;
-						}else{
-							reproducibleSquares[i][j] = false;
-						}
-					}else{
-						reproducibleSquares[i][j] = false;
-					}
-				}else{
-					if(forestGrid[i - 1][j] == true || forestGrid[i + 1][j] == true || forestGrid[i][j - 1] == true || forestGrid[i][j + 1] == true) {
-						if(forestGrid[i][j] == false) {
-							reproducibleSquares[i][j] = true;
-						}else{
-							reproducibleSquares[i][j] = false;
-						}
-					}else{
-						reproducibleSquares[i][j] = false;
-					}
-				}
+					
 			}
 		}
 	}
@@ -136,6 +83,8 @@ public class Forest {
 	public void reproduce() {
 		for(int i = 0;i < 20;i++) {
 			for(int j = 0;j < 20;j++) {
+				
+				
 				if(reproducibleSquares[i][j] == true) {
 					forestGrid[i][j] = true;
 				}
