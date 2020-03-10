@@ -43,8 +43,8 @@ public class Forest {
 		//Compile a list of squares that are next to trees
 		//For each square in the forest grid:
 		for(int i = 0;i < 20;i++) {
-			for(int j = 0;j < 20;j++) {
-					try {
+			for(int j = 0;j < 20;j++) {	
+				try {
 						if(forestGrid[i][j] == true) {
 							if(forestGrid[i + 1][j] == false) {
 								reproducibleSquares[i + 1][j] = true;
@@ -62,7 +62,6 @@ public class Forest {
 						}
 					}catch(Exception e) {
 						error = e.getStackTrace()[0].getLineNumber();
-						System.out.println(error);
 						if(error == 49) {
 							if(forestGrid[0][j] == false) {
 								reproducibleSquares[0][j] = true;
