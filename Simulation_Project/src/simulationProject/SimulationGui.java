@@ -31,6 +31,12 @@ public SimulationGui(boolean[][]forestGrid) {
 		c.gridwidth = 10;
 		start.setPreferredSize(new Dimension(100, 50));
 		start.setText("Start");
+		
+		
+		
+		
+		
+		
 		panel.add(start, c);
 		
 		restart = new JButton();

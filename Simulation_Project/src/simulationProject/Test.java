@@ -41,16 +41,19 @@ public class Test {
 
 		SimulationGui simulationGui = new SimulationGui(forestGrid);
 
-		while(running == true) {
+
+		//while(running == true) {
 			forest.checkForestReproductionSquares();
 			forest.reproduce();
 			forestGrid = forest.returnForestGrid();
 			rabbit.tick(forestGrid);
-		}
+			
+		//}
 
 
 		
 		
 	}
+
 
 }
