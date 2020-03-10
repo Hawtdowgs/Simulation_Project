@@ -2,7 +2,8 @@ package simulationProject;
 import java.util.Random;
 import java.util.Scanner;
 public class wolf {
-private boolean[][] wPosition, wSex, wFull, wMove;
+private boolean[][] wSex, wFull, wMove;
+public boolean[][] wPosition;
 private int[][] wolf;
 private double rate;
 private int initial, sex, pos1, pos2;
@@ -48,10 +49,11 @@ private int initial, sex, pos1, pos2;
 				validRate = true;
 			}
 		}while(validRate == false);
-		
-		
-		
-		
+			
+	}
+	
+	public boolean[][] getWolfGrid() {
+		return wPosition;
 	}
 	
 	@SuppressWarnings("null")

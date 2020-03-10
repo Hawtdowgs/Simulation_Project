@@ -2,16 +2,19 @@ package simulationProject;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class SimulationGui {
+public class SimulationGui implements ActionListener{
 	private JPanel panel;
 	private JFrame frame;
 	private JButton start;
 	private JButton tick;
 	private JLabel[][]labelGrid;
-	
+	private ImageIcon grey, green;
+	private boolean[][]forestGrid, wPosition, rabbitSpawn;
 
-public SimulationGui(boolean[][]forestGrid) {
+	public SimulationGui() {
 		frame = new JFrame("Nature Simulator");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(1400, 800);
@@ -20,13 +23,15 @@ public SimulationGui(boolean[][]forestGrid) {
 		panel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-		start = new JButton();
+		start = new JButton("Start");
+		start.setActionCommand("start");
 		c.gridx = 0;
 		c.gridy = 0;
 		c.gridwidth = 10;
 		panel.add(start, c);
-		
-		tick = new JButton();
+	
+		tick = new JButton("Update");
+		tick.setActionCommand("tick");
 		c.gridx = 10;
 		c.gridy = 0;
 		c.gridwidth = 10;
@@ -36,7 +41,6 @@ public SimulationGui(boolean[][]forestGrid) {
 		ImageIcon green = new ImageIcon("images/green square.jpg");
 		JLabel[][] labelGrid = new JLabel[20][20];
 
-		
 		for(int i = 0;i < 20;i++) {
 			for(int j = 0;j < 20;j++) {
 				labelGrid[i][j] = new JLabel();
@@ -55,9 +59,48 @@ public SimulationGui(boolean[][]forestGrid) {
 			}
 		}
 		
-
 		frame.setContentPane(panel);
 		frame.setVisible(true);	
 	}
+	
+	public void updateGridData(boolean[][]forest, boolean[][]rabbit, boolean[][]wolf) {
+		for(int i = 0;i < 20;i++) {
+			for(int j = 0;j < 20;j++) {
+				forestGrid[i][j] = forest[i][j];
+				rabbitSpawn[i][j] = rabbit[i][j];
+				wPosition[i][j] = wolf[i][j];
+			}
+		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent event) {
+		String eventName = event.getActionCommand();
 		
+		if(eventName.equals("tick")) {
+			for(int i = 0;i < 20;i++) {
+				for(int j = 0;j < 20;j++) {
+					if(forestGrid[i][j] == true) {
+						if(rabbitSpawn[i][j] == true) {
+							
+						}else if(wPosition[i][j] == true) {
+							
+						}else{
+							
+						}
+					}else{
+						if(rabbitSpawn[i][j] == true) {
+							
+						}else if(wPosition[i][j] == true) {
+							
+						}else{
+							
+						}
+					}
+				}
+			}
+		}
+		
+	}
+	
 }
