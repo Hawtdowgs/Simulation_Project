@@ -30,7 +30,7 @@ public class Rabbit {
 		do {
 			System.out.println("how many rabbits?");
 			spawnNum = input.nextInt();
-		}while(spawnNum < 1 || spawnNum > 399);
+		}while(spawnNum < 1 || spawnNum > 400);
 		return spawnNum;
 	}
 
