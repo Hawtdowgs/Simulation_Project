@@ -1,4 +1,3 @@
-
 /*
  * Konner Friesen	
  * Feb 19, 2020
@@ -9,13 +8,11 @@ import java.util.Random;
 import java.util.Scanner;
 public class Rabbit {
 	int inSpawn;
-	boolean[][] rabbitSpawn, alive, fed, roam, reproduce, actionUsed;
+	public boolean[][] rabbitSpawn;
+	private boolean[][] fed, actionUsed;
 	
 	public Rabbit() {
 		fed = new boolean[20][20];
-		alive = new boolean[20][20];
-		roam = new boolean[20][20];
-		reproduce = new boolean[20][20];
 		rabbitSpawn = new boolean[20][20];
 		actionUsed = new boolean[20][20];
 	}
@@ -23,10 +20,10 @@ public class Rabbit {
 
 
 	/**
-	 * gets a value  from the player for how many rabbits are in the simulation
+	 * Gets a value from the player for how many rabbits are in the simulation
 	 * @return
 	 */
-	public static int getRab() {
+	public int getRab() {
 
 		int spawnNum;
 		Scanner input = new Scanner(System.in);
@@ -41,9 +38,17 @@ public class Rabbit {
 	 * Creates grid which shows where all the rabbits are
 	 */
 	public void createRabbitGrid(int rabbits) {
+		Random r = new Random();
 		int x, y;
+		
+		for(int i = 0;i < rabbits;i++) {
+			do {
+				x = r.nextInt(20);
+				y = r.nextInt(20);
+			}while(rabbitSpawn[x][y] == true);
+			rabbitSpawn[x][y] = true;
+		}
 
-	
 	}
 
 	/**
@@ -266,10 +271,6 @@ public class Rabbit {
 	public boolean[][] returnRabbitGrid() {
 		return rabbitSpawn;
 	}
-
-
-		
-
-
+	
 }
 
