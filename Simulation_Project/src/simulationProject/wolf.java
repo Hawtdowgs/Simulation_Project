@@ -45,7 +45,7 @@ private int sex, pos1, pos2;
 			System.out.println("values between 1 and 3 are ideal:");
 			rate = input.nextDouble() * 100;
 			
-			if(rate < 0 || rate > 1) {
+			if(rate < 0) {
 				validRate = false;
 			}else {
 				validRate = true;
