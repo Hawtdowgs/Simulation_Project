@@ -1,3 +1,4 @@
+
 /*
  * Konner Friesen, Gabriel Hamm, and Spencer Molloy
  * February 18, 2020
@@ -57,3 +58,5 @@ public class Test {
 
 
 }
+
+

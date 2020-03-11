@@ -51,6 +51,11 @@ private int sex, pos1, pos2;
 				validRate = true;
 			}
 		}while(validRate == false);
+	
+	}
+	
+	public boolean[][] getWolfGrid() {
+		return wPosition;
 	}
 	
 	@SuppressWarnings("null")

@@ -7,7 +7,7 @@ public class Forest {
 	Random r = new Random();
 	private int initialForestSquares;
 	private int forestReproductionRate;
-	private boolean[][] forestGrid;
+	public boolean[][] forestGrid;
 	private boolean[][] reproducibleSquares;
 	private int[][] treeAge;
 	public Forest(int fs, int fr) {
