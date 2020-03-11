@@ -18,7 +18,7 @@ public class Test {
 		boolean[][]RabbitSpawn = new boolean[20][20];
 		boolean[][] wolfPosition = new boolean[20][20];
 		wolf wolf = new wolf();
-		Rabbit rabbit = new Rabbit();
+		Rabbit Rabbit = new Rabbit();
 		
 		wolf.wSetUp();
 		wolfPosition = wolf.wSpawn();
